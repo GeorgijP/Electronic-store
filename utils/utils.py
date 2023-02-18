@@ -26,15 +26,3 @@ class Card_product:
         """
         self.price_prod_total = self.quantity * self.price_prod
         return self.price_prod_total
-
-
-item1 = Card_product("Смартфон", 10000, 20)
-item2 = Card_product("Ноутбук", 20000, 5)
-
-print(item1.calculate_total_price())
-print(item2.calculate_total_price())
-
-Card_product.discount = 20
-print(item1.apply_discount())
-
-print(Card_product.products)
