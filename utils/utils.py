@@ -1,5 +1,6 @@
 import csv
 
+
 class Card_product:
     """
     Класс для представления товара в магазине
@@ -8,9 +9,9 @@ class Card_product:
     discount = 0
 
     def __init__(self, name_prod, price_prod, quantity):
+        self._name_prod = name_prod
         self.price_prod = price_prod
         self.quantity = quantity
-        self._name_prod = name_prod
         Card_product.products.append(self)
 
     @property
@@ -31,7 +32,7 @@ class Card_product:
 
     def calculate_total_price(self):
         """
-        Возвращает общую стоимость конкретного товара в магазине
+        возвращает общую стоимость конкретного товара в магазине
         """
         self.price_prod_total = self.quantity * self.price_prod
         return self.price_prod_total
@@ -42,8 +43,8 @@ class Card_product:
         Создание экземпляров класса из списка файла формата csv
         """
         items = []
-        with open(name_file, 'r', encoding='windows-1251') as f:
-            reader = csv.DictReader(f)
+        with open(name_file, 'r', encoding='windows-1251') as file:
+            reader = csv.DictReader(file)
             for i in reader:
                 items.append(cls(i['name'], i['price'], i['quantity']))
         return items
