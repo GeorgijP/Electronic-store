@@ -14,13 +14,30 @@ class Card_product:
         self.quantity = quantity
         Card_product.products.append(self)
 
+    @classmethod
+    def instantiate_from_csv(cls, name_file):
+        """
+        Создание экземпляров класса из списка файла формата csv
+        """
+        items = []
+        with open(name_file, 'r', encoding='windows-1251') as file:
+            reader = csv.DictReader(file)
+            for i in reader:
+                name_prod = i['name']
+                price_prod = int(i['price'])
+                quantity = int(i['quantity'])
+                items.append(cls(name_prod, price_prod, quantity))
+        return items
+
     @property
     def name_prod(self):
         """
-        Проверяет длинну наименования продукта
+        Проверяет длину наименования продукта
         """
         if len(self._name_prod) > 10:
             raise ValueError('Название длиннее 10 знаков')
+        else:
+            return self._name_prod
 
     def apply_discount(self):
         """
@@ -32,22 +49,10 @@ class Card_product:
 
     def calculate_total_price(self):
         """
-        возвращает общую стоимость конкретного товара в магазине
+        Возвращает общую стоимость конкретного товара в магазине
         """
         self.price_prod_total = self.quantity * self.price_prod
         return self.price_prod_total
-
-    @classmethod
-    def instantiate_from_csv(cls, name_file):
-        """
-        Создание экземпляров класса из списка файла формата csv
-        """
-        items = []
-        with open(name_file, 'r', encoding='windows-1251') as file:
-            reader = csv.DictReader(file)
-            for i in reader:
-                items.append(cls(i['name'], i['price'], i['quantity']))
-        return items
 
     @staticmethod
     def is_integer(number):
@@ -55,6 +60,7 @@ class Card_product:
         Проверка целочисленности
         """
         if number % 1 == 0:
-            return True
+            return int(number)
         else:
-            return False
+            return float(number)
+
