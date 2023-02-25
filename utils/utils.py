@@ -1,3 +1,6 @@
+import csv
+
+
 class Card_product:
     """
     Класс для представления товара в магазине
@@ -6,15 +9,39 @@ class Card_product:
     discount = 0
 
     def __init__(self, name_prod, price_prod, quantity):
-        self.name_prod = name_prod
+        self._name_prod = name_prod
         self.price_prod = price_prod
         self.quantity = quantity
         Card_product.products.append(self)
 
+    @classmethod
+    def instantiate_from_csv(cls, name_file):
+        """
+        Создание экземпляров класса из списка файла формата csv
+        """
+        items = []
+        with open(name_file, 'r', encoding='windows-1251') as file:
+            reader = csv.DictReader(file)
+            for i in reader:
+                name_prod = i['name']
+                price_prod = int(i['price'])
+                quantity = int(i['quantity'])
+                items.append(cls(name_prod, price_prod, quantity))
+        return items
+
+    @property
+    def name_prod(self):
+        """
+        Проверяет длину наименования продукта
+        """
+        if len(self._name_prod) > 10:
+            raise ValueError('Название длиннее 10 знаков')
+        else:
+            return self._name_prod
 
     def apply_discount(self):
         """
-        возвращает установленную скидку для конкретного товара
+        Возвращает установленную скидку для конкретного товара
         """
         self.discount = (100 - self.discount) / 100
         self.price_prod_discount = self.discount * self.price_prod
@@ -22,7 +49,18 @@ class Card_product:
 
     def calculate_total_price(self):
         """
-        возвращает общую стоимость конкретного товара в магазине
+        Возвращает общую стоимость конкретного товара в магазине
         """
         self.price_prod_total = self.quantity * self.price_prod
         return self.price_prod_total
+
+    @staticmethod
+    def is_integer(number):
+        """
+        Проверка целочисленности
+        """
+        if number % 1 == 0:
+            return int(number)
+        else:
+            return float(number)
+
