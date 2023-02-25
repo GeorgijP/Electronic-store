@@ -64,3 +64,9 @@ class Card_product:
         else:
             return float(number)
 
+    def __repr__(self):
+        return f"Card_product: {self._name_prod}, {self.price_prod}, {self.quantity}"
+
+    def __str__(self):
+        return f"Наименование товара - {self._name_prod}, его цена - {self.price_prod}, сколько осталось в магазине: {self.quantity} шт."
+
