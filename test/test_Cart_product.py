@@ -17,3 +17,7 @@ def test_calculate_total_price():
     assert item1.calculate_total_price() == 300000
     assert item2.calculate_total_price() == 25000
     assert item3.calculate_total_price() == 6000000
+
+def test_is_integer():
+    assert item1.is_integer(1.0) == int(1.0)
+    assert item2.is_integer(1.1) == float(1.1)
