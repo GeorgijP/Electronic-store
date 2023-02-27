@@ -1,12 +1,12 @@
 from utils.utils import Card_product
 
-# Указание скидки на товар
-Card_product.discount = 20
-
 # Экземпляры класса для тестов
-item1 = Card_product("СуперСмартфон", 15000, 20)
+item1 = Card_product("Смартфон", 15000, 20)
 item2 = Card_product("Телефон", 1000, 25)
 item3 = Card_product("iPhone", 200000, 30)
+
+# Указание скидки на товар
+Card_product.discount = 20
 
 def test_apply_discount():
     assert item1.apply_discount() == 12000
