@@ -70,3 +70,19 @@ class Card_product:
     def __str__(self):
         return f"Наименование товара - {self._name_prod}, его цена - {self.price_prod}, сколько осталось в магазине: {self.quantity} шт."
 
+class Phone(Card_product):
+    """
+    Класс для смартфонов/телефонов
+    """
+    def __init__(self,name_prod, price_prod, quantity, quantity_sim):
+        super().__init__(name_prod, price_prod, quantity)
+        self.quantity_sim = quantity_sim
+
+    def __add__(self, other):
+        """
+        Сложние колличества товара на складе
+        """
+        if isinstance(other, Card_product):
+            return self.quantity + other.quantity
+        else:
+            ValueError ("Только объекты Phone и Card_product")
