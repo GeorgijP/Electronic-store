@@ -9,3 +9,7 @@ def test_add():
 
 def test_quantity_sim():
     assert item1.quantity_sim == 2
+    item1.quantity_sim = 2.1
+    with pytest.raises(ValueError):
+        item1.quantity_sim
+

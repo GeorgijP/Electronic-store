@@ -77,3 +77,7 @@ class Phone(Card_product):
             raise ValueError ("Количество физических SIM-карт должно быть целым числом больше нуля.")
         else:
             return self._quantity_sim
+
+    @quantity_sim.setter
+    def quantity_sim(self, value):
+        self._quantity_sim = value
