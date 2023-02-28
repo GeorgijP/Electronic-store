@@ -6,3 +6,6 @@ item2 = Card_product("Смартфон", 15_000, 20)
 
 def test_add():
     assert item1 + item2 == 24
+
+def test_quantity_sim():
+    assert item1.quantity_sim == 2

@@ -2,9 +2,7 @@ import csv
 
 
 class Card_product:
-    """
-    Класс для представления товара в магазине
-    """
+    """Класс для представления товара в магазинe"""
     products = []
     discount = 0
 
@@ -16,9 +14,7 @@ class Card_product:
 
     @classmethod
     def instantiate_from_csv(cls, name_file):
-        """
-        Создание экземпляров класса из списка файла формата csv
-        """
+        """Создание экземпляров класса из списка файла формата csv"""
         items = []
         with open(name_file, 'r', encoding='windows-1251') as file:
             reader = csv.DictReader(file)
@@ -31,34 +27,26 @@ class Card_product:
 
     @property
     def name_prod(self):
-        """
-        Проверяет длину наименования продукта
-        """
+        """Проверяет длину наименования продукта"""
         if len(self._name_prod) > 10:
             raise ValueError('Название длиннее 10 знаков')
         else:
             return self._name_prod
 
     def apply_discount(self):
-        """
-        Возвращает установленную скидку для конкретного товара
-        """
+        """Возвращает установленную скидку для конкретного товара"""
         self.discount = (100 - self.discount) / 100
         self.price_prod_discount = self.discount * self.price_prod
         return self.price_prod_discount
 
     def calculate_total_price(self):
-        """
-        Возвращает общую стоимость конкретного товара в магазине
-        """
+        """Возвращает общую стоимость конкретного товара в магазине"""
         self.price_prod_total = self.quantity * self.price_prod
         return self.price_prod_total
 
     @staticmethod
     def is_integer(number):
-        """
-        Проверка целочисленности
-        """
+        """Проверка целочисленности"""
         if number % 1 == 0:
             return int(number)
         else:
@@ -71,18 +59,21 @@ class Card_product:
         return f"Наименование товара - {self._name_prod}, его цена - {self.price_prod}, сколько осталось в магазине: {self.quantity} шт."
 
 class Phone(Card_product):
-    """
-    Класс для смартфонов/телефонов
-    """
+    """Класс для смартфонов/телефонов"""
     def __init__(self,name_prod, price_prod, quantity, quantity_sim):
         super().__init__(name_prod, price_prod, quantity)
-        self.quantity_sim = quantity_sim
+        self._quantity_sim = quantity_sim
 
     def __add__(self, other):
-        """
-        Сложние колличества товара на складе
-        """
+        """Сложние колличества товара на складе"""
         if isinstance(other, Card_product):
             return self.quantity + other.quantity
         else:
             ValueError ("Только объекты Phone и Card_product")
+
+    @property
+    def quantity_sim(self):
+        if self._quantity_sim % 1 > 0:
+            raise ValueError ("Количество физических SIM-карт должно быть целым числом больше нуля.")
+        else:
+            return self._quantity_sim
