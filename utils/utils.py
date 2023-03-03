@@ -58,26 +58,49 @@ class Card_product:
     def __str__(self):
         return f"Наименование товара - {self._name_prod}, его цена - {self.price_prod}, сколько осталось в магазине: {self.quantity} шт."
 
+
 class Phone(Card_product):
     """Класс для смартфонов/телефонов"""
-    def __init__(self,name_prod, price_prod, quantity, quantity_sim):
+
+    def __init__(self, name_prod, price_prod, quantity, quantity_sim):
         super().__init__(name_prod, price_prod, quantity)
         self._quantity_sim = quantity_sim
 
     def __add__(self, other):
-        """Сложние колличества товара на складе"""
+        """Сложние количества товара на складе"""
         if isinstance(other, Card_product):
             return self.quantity + other.quantity
         else:
-            ValueError ("Только объекты Phone и Card_product")
+            ValueError("Только объекты Phone и Card_product")
 
     @property
     def quantity_sim(self):
         if self._quantity_sim % 1 > 0:
-            raise ValueError ("Количество физических SIM-карт должно быть целым числом больше нуля.")
+            raise ValueError("Количество физических SIM-карт должно быть целым числом больше нуля.")
         else:
             return self._quantity_sim
 
     @quantity_sim.setter
     def quantity_sim(self, value):
         self._quantity_sim = value
+
+
+class MixinLanguage:
+    """Отвечает за язык клавиатуры"""
+    def __init__(self, *args):
+        self._language = "EN"
+        super().__init__(*args)
+
+    @property
+    def language(self):
+        return self._language
+
+    def change_lang(self):
+        if self._language == "EN":
+            self._language = "RU"
+        else:
+            self._language = "EN"
+
+class Keyboard(MixinLanguage, Card_product):
+    """Класс для клавиатуры"""
+    pass
