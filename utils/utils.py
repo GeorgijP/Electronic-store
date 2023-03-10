@@ -1,10 +1,10 @@
 import csv
-
+from utils.InstantiateCSVError import InstantiateCSVError
 
 class Card_product:
     """Класс для представления товара в магазинe"""
     products = []
-    discount = 0
+    discount = 0 # В процентах
 
     def __init__(self, name_prod, price_prod, quantity):
         self._name_prod = name_prod
@@ -16,13 +16,22 @@ class Card_product:
     def instantiate_from_csv(cls, name_file):
         """Создание экземпляров класса из списка файла формата csv"""
         items = []
-        with open(name_file, 'r', encoding='windows-1251') as file:
-            reader = csv.DictReader(file)
-            for i in reader:
-                name_prod = i['name']
-                price_prod = int(i['price'])
-                quantity = int(i['quantity'])
-                items.append(cls(name_prod, price_prod, quantity))
+        try:
+            with open(name_file, 'r', encoding='windows-1251') as file:
+                reader = csv.DictReader(file)
+                for i in reader:
+                    if list(i.keys()) == ["name", "price", "quantity"]:
+                        name_prod = i['name']
+                        price_prod = int(i['price'])
+                        quantity = int(i['quantity'])
+                        items.append(cls(name_prod, price_prod, quantity))
+                    else:
+                        raise InstantiateCSVError
+        except FileNotFoundError:
+            print("Отсутствует файл item.csv")
+        except InstantiateCSVError:
+            print("Файл item.csv поврежден")
+
         return items
 
     @property
