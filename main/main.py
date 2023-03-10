@@ -1,10 +1,3 @@
-from utils.utils import Phone
+from utils.utils import Card_product
 
-item = Phone("SamsundDuo", 60_000, 4, 2)
-
-
-print(item.quantity_sim)
-
-item.quantity_sim = 100
-
-print(item.quantity_sim)
+Card_product.instantiate_from_csv("items.csv")
