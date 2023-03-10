@@ -41,3 +41,9 @@ def test_repr():
     assert item2.__repr__() == "Card_product: Телефон, 1000, 25"
     assert item3.__repr__() == "Card_product: iPhone, 200000, 30"
     assert item4.__repr__() == "Card_product: СуперСмартфон, 99000, 10"
+
+def test_except_Card_product():
+    assert Card_product.instantiate_from_csv("") == "Отсутствует файл item.csv"
+    # Если файл поврежден
+    assert Card_product.instantiate_from_csv("items.csv") == "Файл item.csv поврежден"
+
