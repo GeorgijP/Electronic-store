@@ -26,11 +26,9 @@ class Card_product:
                         quantity = int(i['quantity'])
                         items.append(cls(name_prod, price_prod, quantity))
                     else:
-                        raise InstantiateCSVError
+                        raise InstantiateCSVError("Файл item.csv поврежден")
         except FileNotFoundError:
-            print("Отсутствует файл item.csv")
-        except InstantiateCSVError:
-            print("Файл item.csv поврежден")
+            raise FileNotFoundError("Отсутствует файл item.csv")
 
         return items
 
